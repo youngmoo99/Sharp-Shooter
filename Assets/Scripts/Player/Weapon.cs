@@ -25,7 +25,7 @@ public class Weapon : MonoBehaviour
         out hit, Mathf.Infinity, interactionLayers, QueryTriggerInteraction.Ignore))
         {
             Instantiate(weaponSO.HitVFXPrefab, hit.point, Quaternion.identity);
-            EnemyHealth enemyHealth = hit.collider.GetComponent<EnemyHealth>();
+            EnemyHealth enemyHealth = hit.collider.GetComponentInParent<EnemyHealth>();
             enemyHealth?.TakeDamage(weaponSO.Damage);
         }
     }
