@@ -10,6 +10,7 @@ public class ActiveWeapon : MonoBehaviour
     [SerializeField] Camera weaponCamera;
     [SerializeField] GameObject zoomVignette;
     [SerializeField] TMP_Text ammoText;
+    [SerializeField] AudioSource sfxSource;
 
     WeaponSO currentWeaponSO;
     Animator animator;
@@ -31,6 +32,10 @@ public class ActiveWeapon : MonoBehaviour
         animator = GetComponent<Animator>();
         defaultFOV = playerFollowCamera.m_Lens.FieldOfView;
         defaultRotationSpeed = firstPersonController.RotationSpeed;
+        if (sfxSource == null)
+        {
+            sfxSource = GetComponent<AudioSource>();
+        }
     }
 
     void Start()
@@ -79,6 +84,7 @@ public class ActiveWeapon : MonoBehaviour
         if (timeSinceLastShot >= currentWeaponSO.FireRate && currentAmmo > 0)
         {
             currentWeapon.Shoot(currentWeaponSO);
+            PlayShootSFX();
             animator.Play(SHOOT_STRING, 0, 0f);
             timeSinceLastShot = 0f;
             AdjustAmmo(-1);
@@ -89,6 +95,15 @@ public class ActiveWeapon : MonoBehaviour
             starterAssetsInputs.ShootInput(false);
         }
 
+    }
+
+    void PlayShootSFX()
+    {
+        if (currentWeaponSO == null) return;
+        if (currentWeaponSO.ShootSFX == null) return;
+
+        sfxSource.pitch = currentWeaponSO.ShootPitch;
+        sfxSource.PlayOneShot(currentWeaponSO.ShootSFX, currentWeaponSO.ShootVolume);
     }
 
     void HandleZoom()

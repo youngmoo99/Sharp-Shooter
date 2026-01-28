@@ -9,33 +9,45 @@ public class EnemyHealth : MonoBehaviour
     bool isDead = false;
 
     GameManager gameManager;
+    bool registered = false;
 
     void Awake()
     {
-        currentHealth = startingHealth;
-        gameManager = FindFirstObjectByType<GameManager>(); // ✅ 여기서 잡는 게 더 안정적
+        gameManager = FindFirstObjectByType<GameManager>();
     }
 
     void OnEnable()
     {
-        // ✅ 활성화될 때마다 등록 (스폰/풀링 모두 대응)
-        gameManager?.AdjustEnemiesLeft(1);
+        // Enable이 여러 번 되어도 +1 중복 방지
+        if (!registered)
+        {
+            gameManager?.AdjustEnemiesLeft(1);
+            registered = true;
+        }
 
-        // 풀링/재활성 대비
+        // 재활성/스폰 대비
         isDead = false;
         currentHealth = startingHealth;
     }
 
+    void OnDisable()
+    {
+        // Disable/Destroy될 때 반드시 -1 (중복 방지)
+        if (registered)
+        {
+            gameManager?.AdjustEnemiesLeft(-1);
+            registered = false;
+        }
+    }
+
     public void TakeDamage(int amount)
     {
-        if (isDead) return;              // ✅ 중복 데미지/중복 죽음 방지
+        if (isDead) return;
 
         currentHealth -= amount;
-
         if (currentHealth <= 0)
         {
             isDead = true;
-            gameManager?.AdjustEnemiesLeft(-1);
             SelfDestruct();
         }
     }
@@ -45,6 +57,6 @@ public class EnemyHealth : MonoBehaviour
         if (explosionVFX != null)
             Instantiate(explosionVFX, transform.position, Quaternion.identity);
 
-        Destroy(gameObject);
+        Destroy(gameObject); // Destroy되면 OnDisable 호출됨 → -1 처리
     }
 }

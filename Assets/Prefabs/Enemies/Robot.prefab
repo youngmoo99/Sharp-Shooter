@@ -86,6 +86,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explosionVFX: {fileID: 4765599149363909988, guid: 5e033fcfabafdec4c8d62bff833ab5ae, type: 3}
   startingHealth: 3
+  explosionAudio: {fileID: 0}
 --- !u!136 &3390784059505824748
 CapsuleCollider:
   m_ObjectHideFlags: 0

@@ -14,11 +14,14 @@ public class GameManager : MonoBehaviour
     public void AdjustEnemiesLeft(int amount)
     {
         enemiesLeft += amount;
-        enemiesLeftText.text = ENEMIES_LEFT_STRING + enemiesLeft.ToString();
-        
+
+        if (enemiesLeftText) // ✅ 파괴/미할당 방지
+            enemiesLeftText.text = ENEMIES_LEFT_STRING + enemiesLeft.ToString();
+
         if (enemiesLeft <= 0)
         {
-            youWinText.SetActive(true);
+            if (youWinText) // ✅ 파괴/미할당 방지
+                youWinText.SetActive(true);
         }
     }
     
