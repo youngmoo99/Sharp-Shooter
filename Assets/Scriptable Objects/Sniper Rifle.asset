@@ -21,6 +21,6 @@ MonoBehaviour:
   CanZoom: 1
   ZoomAmount: 10
   ZoomRotationSpeed: 0.3
-  ShootSFX: {fileID: 8300000, guid: 895ccabecc1350e4b8b69404067e7cf9, type: 3}
+  ShootSFX: {fileID: 8300000, guid: c0e010b91287b7e4aaddc774d3ac54cb, type: 3}
   ShootVolume: 1
   ShootPitch: 0.9
