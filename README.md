@@ -30,7 +30,7 @@
 
 <h2 id="demo">🎮 플레이 영상</h2>
 
-* ▶️ **Gameplay Video**: (추가 예정)
+* ▶️ **Gameplay Video**: [플레이 영상](https://youtu.be/Q2_i_9t7mVU)
 
 > 플레이어는 필드에서 총과 탄약을 수집하고, 주기적으로 생성되는 적과 스폰 게이트를 파괴해야 합니다.
 
